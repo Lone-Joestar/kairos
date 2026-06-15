@@ -5,3 +5,4 @@ apache-airflow-providers-postgres==5.10.0
 apache-airflow-providers-amazon==8.19.0
 apache-airflow-providers-slack==8.5.0
 httpx==0.27.0
+pyyaml==6.0.1

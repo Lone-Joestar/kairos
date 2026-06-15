@@ -1,0 +1,21 @@
+categories:
+  - id: "28"
+    name: science_and_technology
+    label: "Science & Technology"
+  - id: "27"
+    name: education
+    label: "Education"
+  - id: "24"
+    name: entertainment
+    label: "Entertainment"
+  - id: "25"
+    name: news_and_politics
+    label: "News & Politics"
+  - id: "10"
+    name: music
+    label: "Music"
+
+settings:
+  region_code: US
+  max_results: 50
+  fetch_interval_hours: 1
