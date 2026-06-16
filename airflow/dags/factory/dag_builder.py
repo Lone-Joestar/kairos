@@ -143,6 +143,17 @@ def build_dag(category: dict) -> DAG:
                     comment_count = EXCLUDED.comment_count,
                     ingested_at = NOW();
             """
+               
+            snapshot_sql=   """INSERT INTO kairos_raw.video_snapshots (
+                        video_id, category_id, category_name, title,
+                        channel_title, view_count, like_count, comment_count,
+                        published_at, snapshotted_at, region_code
+                    ) VALUES (
+                        %(video_id)s, %(category_id)s, %(category_name)s, %(title)s,
+                        %(channel_title)s, %(view_count)s, %(like_count)s, %(comment_count)s,
+                        %(published_at)s, NOW(), %(region_code)s
+                    ) 
+                    """
 
             videos = extracted["videos"]
             inserted = 0
@@ -151,11 +162,14 @@ def build_dag(category: dict) -> DAG:
                 with conn.cursor() as cur:
                     for video in videos:
                         cur.execute(upsert_sql, video)
+                        cur.execute(snapshot_sql,video)
                         inserted += 1
 
             conn.close()
             print(f"Upserted {inserted} videos to kairos_raw.videos")
             return inserted
+        
+
 
         @task(task_id="score_sentiment")
         def score_sentiment(extracted: dict) -> int:

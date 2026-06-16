@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: stg_videos
+    description: "Staged YouTube trending videos from raw ingestion"
+    columns:
+      - name: video_id
+        description: "Unique YouTube video identifier"
+        tests:
+          - not_null
+          - unique
+      - name: view_count
+        description: "Total view count at time of ingestion"
+        tests:
+          - not_null
+      - name: title
+        description: "Video title"
+        tests:
+          - not_null
+
+  - name: int_video_metrics
+    description: "Video metrics with engagement calculations"
+    columns:
+      - name: video_id
+        description: "Unique YouTube video identifier"
+        tests:
+          - not_null
+      - name: engagement_rate
+        description: "Likes + comments divided by views"
+        tests:
+          - not_null
+
+  - name: int_video_signals
+    description: "Velocity scoring using LAG window function on snapshots"
+    columns:
+      - name: video_id
+        description: "Unique YouTube video identifier"
+        tests:
+          - not_null
+
+  - name: mart_trending
+    description: "Top trending videos ranked by velocity"
+    columns:
+      - name: velocity
+        description: "Views gained per hour between snapshots"
+
+  - name: mart_breakout_alerts
+    description: "Videos exceeding 10k views/hour velocity threshold"
+    columns:
+      - name: alert_reason
+        description: "Reason for breakout classification"
+        tests:
+          - not_null

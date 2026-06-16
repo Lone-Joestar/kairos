@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: kairos_raw
+    schema: kairos_raw
+    tables:
+      - name: videos
+        description: "Raw youtube videos ingested by Airflow"
+      - name: video_snapshots
+        description: "Hourly snapshots of video metrics for velocity scoring"
